@@ -1,1066 +1,1148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hero Landing Page</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Danish Portfolio</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+        <script>feather.replace();</script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+    <style>
+      /* Mobile Menu */
+      @media (max-width: 767px) {
+        #menu {
+          transform: translateX(100%);
+          transition: transform 0.4s ease;
+        }
+        #menu.open {
+          transform: translateX(0);
+        }
+      }
 
-  <!-- Google Fonts: Lexend -->
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Lexend', sans-serif; }
-  </style>
-  <style type="text/tailwindcss">
-  /* Base style for all dots */
-  .swiper-pagination-bullet {
-    @apply w-4 h-4 bg-white/50 rounded-full mx-2 transition-all duration-300;
+      /* Glow Animation */
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 20px #3b82f6, 0 0 40px #60a5fa;
+        }
+        50% {
+          box-shadow: 0 0 35px #60a5fa, 0 0 70px #93c5fd;
+        }
+      }
+      .animate-pulse-glow {
+        animation: pulse-glow 3s ease-in-out infinite;
+      }
+
+      /* Fade */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 1s ease-out forwards;
+      }
+
+      /* Icons */
+      .footer-icon svg {
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+      .footer-icon:hover svg {
+        transform: scale(1.4);
+        color: #3b82f6;
+      }
+/* Scroll Reveal + Skill Card */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Skill Card */
+.skill-card {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: #3b82f6;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+}
+.skill-card img {
+  width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+.skill-card p {
+  color: #f3f3f6;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+/* Timeline Line Animation */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, #3b82f6, #60a5fa);
+  transform: translateX(-50%);
+  transition: height 1.2s ease;
+}
+
+.timeline-line.active {
+  height: 100%;
+}
+
+/* Timeline Card */
+.timeline-card {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 14px;
+  padding: 24px;
+  position: relative;
+}
+
+/* Duration Badge */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  margin-bottom: 8px;
+}
+
+/* Logo */
+.company-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+/* Project Card */
+.project-card {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  border-color: #3b82f6;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.project-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+.project-tag {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+/* Modal Overlay */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 18px;
+  max-width: 720px;
+  width: 90%;
+  padding: 28px;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+  transform: scale(1);
+}
+
+/* Modal Image */
+.modal-img {
+  width: 100%;
+  height: 220px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  cursor: pointer;
+  color: #9ca3af;
+}
+.modal-close:hover {
+  color: white;
+}
+/* About Boxes */
+.about-box {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+/* About Cards */
+.about-card {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-6px);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.35);
+}
+/* Button Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-top: 3px solid #020617;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
+}
 
-  /* Active dot (just change color if needed) */
-  .swiper-pagination-bullet-active {
-    @apply bg-white opacity-100;
-  }
+/* Popup */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
-  /* Disable neighbor dot styles */
-  .swiper-pagination-bullet-active-prev,
-  .swiper-pagination-bullet-active-next,
-  .swiper-pagination-bullet-active-prev-prev,
-  .swiper-pagination-bullet-active-next-next {
-    @apply w-4 h-4 bg-white/50 opacity-100;
-  }
-</style>
-</head>
-<body class="antialiased bg-white text-slate-800">
+.popup.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-  <!-- NAVBAR (kept same as you had) -->
-   <!-- NAVBAR -->
-<header class="absolute top-0 left-0 w-full z-20">
-  <div class="max-w-[1440px] mx-auto flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 md:py-6">
-    
-    <!-- Logo -->
-    <div class="flex items-center space-x-2">
-      <img src="logo/lightlogo/weblogo.png" alt="Logo"
-        class="w-[120px] sm:w-[150px] md:w-[166px] h-auto object-contain">
+.popup-box {
+  background: #020617;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 18px;
+  padding: 32px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+}
+
+    </style>
+  </head>
+  <body class="bg-[#020617] text-white overflow-x-hidden">
+    <!-- NAVBAR -->
+    <header class="fixed top-0 left-0 w-full z-20">
+      <div class="max-w-[1440px] mx-auto flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 md:py-6">
+        <div class="text-2xl font-bold text-[#ffffff]">
+          Portfolio
+        </div>
+        <!-- Hamburger (Mobile) -->
+        <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 z-30">
+          <span class="block w-6 h-0.5 bg-white"></span>
+          <span class="block w-6 h-0.5 bg-white"></span>
+          <span class="block w-6 h-0.5 bg-white"></span>
+        </button>
+        <!-- Menu -->
+        <nav
+          id="menu"
+          class="absolute md:static top-0 right-0 md:h-auto w-1/2 md:w-auto bg-slate-900 md:bg-transparent 
+         shadow md:shadow-none px-6 py-6 md:p-0 text-white font-medium
+         flex-col md:flex-row md:flex md:space-x-6 lg:space-x-12
+         overflow-hidden transform translate-x-full md:translate-x-0 transition-transform duration-500 ease-in-out hidden md:flex">
+          <a href="#home" class="block py-2 hover:text-indigo-400">Home</a>
+          <a href="#skills" class="block py-2 hover:text-indigo-400">Skills</a>
+          <a href="#experience" class="block py-2 hover:text-indigo-400">Experience</a>
+          <a href="#projects" class="block py-2 hover:text-indigo-400">Projects</a>
+          <a href="#about" class="block py-2 hover:text-indigo-400">About</a>
+          <a href="#contact" class="block py-2 hover:text-indigo-400">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <!-- HERO SECTION -->
+    <section class="min-h-screen pt-28 flex items-center relative overflow-hidden">
+      <div id="particles" class="absolute inset-0 z-0"></div>
+      <div class="relative z-10 max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12 px-6">
+        <!-- IMAGE (LEFT) -->
+        <div class="flex justify-center md:justify-start relative">
+          <!-- Glow -->
+          <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-blue-500/30 blur-3xl"></div>
+          <!-- Image -->
+          <div class="relative w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-full p-[4px] bg-gradient-to-r from-blue-400 to-cyan-400 animate-pulse-glow">
+            <img src="images/danish.jpeg" alt="Profile" class="w-full h-full rounded-full object-cover border-4 border-[#020617]"/>
+          </div>
+        </div>
+        <!-- TEXT (RIGHT) -->
+        <div class="text-center md:text-left">
+          <p class="text-blue-400 mb-2">Hello, I'm</p>
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4 animate-fade-in-up text-white hover:bg-gradient-to-r hover:from-indigo-400 hover:via-purple-400 hover:to-pink-500 hover:bg-clip-text hover:text-transparent transition-colors duration-500">
+                 <span>Danish Rajput</span>
+                 </h1>
+          <h2 id="typed-text" class="text-xl md:text-2xl text-gray-300 mb-6 h-10"></h2>
+          <p class="text-gray-400 max-w-md mb-8">
+            Passionate Computer Science student building modern, scalable
+            and visually engaging web experiences.
+          </p>
+          <!-- Icons -->
+          <div class="flex justify-center md:justify-start gap-5 mb-8">
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="footer-icon">
+        <i data-feather="linkedin" class="w-6 h-6"></i>
+      </a>
+      <a href="https://github.com/yourprofile" target="_blank" class="footer-icon">
+        <i data-feather="github" class="w-6 h-6"></i>
+      </a>
+      <a href="mailto:your.email@example.com" class="footer-icon">
+        <i data-feather="mail" class="w-6 h-6"></i>
+      </a>
+      <a href="https://instagram.com/yourprofile" target="_blank" class="footer-icon">
+        <i data-feather="instagram" class="w-6 h-6"></i>
+      </a>
+          </div>
+          <div class="flex justify-center md:justify-start gap-4">
+  <a href="mailto:your.danishrajpoot2003@gmail.com?subject=Hiring Inquiry" class="px-6 py-3 border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-black transition rounded-md">
+    Hire Me
+  </a>
+  <a href="#contact" class="px-6 py-3 border border-gray-500 text-gray-300 hover:bg-gray-700 transition rounded-md">
+    Contact Me
+  </a>
+</div>
+        </div>
+      </div>
+    </section>
+    <!-- SKILLS SECTION -->
+<section id="skills" class="min-h-screen py-24 bg-[#020617] relative">
+  <div class="max-w-[1440px] mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        My <span class="text-blue-400">Skills</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto">
+        Technologies and tools I use to build modern, scalable, and
+        high-performance applications.
+      </p>
+    </div>
+    <!-- Skills Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
+        <p>HTML5</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
+        <p>CSS3</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+        <p>JavaScript</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" />
+        <p>Tailwind CSS</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+        <p>Node.js</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" />
+        <p>PHP</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" />
+        <p>Laravel</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" />
+        <p>MySQL</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
+        <p>Git</p>
+      </div>
+      <div class="skill-card reveal">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" />
+        <p>GitHub</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- EXPERIENCE SECTION -->
+<section id="experience" class="py-10 md:py-24 bg-[#020617] relative">
+  <div class="max-w-[1440px] mx-auto px-6">
+    <!-- Heading -->
+    <div class="text-center mb-24 reveal">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        My <span class="text-blue-400">Experience</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto">
+        My professional journey, hands-on projects, and learning experiences.
+      </p>
     </div>
 
-    <!-- Hamburger Button (Mobile) -->
-    <button id="menu-btn" aria-expanded="false" class="md:hidden flex flex-col gap-1.5 z-30">
-        <span class="block w-6 h-0.5 bg-white transition-all"></span>
-        <span class="block w-6 h-0.5 bg-white transition-all"></span>
-        <span class="block w-6 h-0.5 bg-white transition-all"></span>
-      </button>
+    <!-- Timeline -->
+    <div class="relative max-w-4xl mx-auto">
 
-    <!-- Menu -->
-          <nav id="menu"
-           class="hidden flex md:flex overflow-hidden max-h-0 md:max-h-none
-                  transition-all duration-300 ease-in-out
-                  flex-col md:flex-row items-start md:items-center
-                  space-y-4 md:space-y-0 md:space-x-6 lg:space-x-12
-                  absolute md:static top-full left-0 w-full md:w-auto
-                  bg-[#003866] md:bg-transparent shadow md:shadow-none
-                  px-6 md:px-0 text-[#003866] font-medium font-[Lexend] z-20">
-      
-      <a href="index1.html" class="block py-2 text-white font-semibold border-l-4 md:border-b-2 md:border-l-0 border-white pl-2 md:pl-0">Home</a>
-      <a href="index2.html" class="block py-2 text-white">What We Do</a>
-      <a href="index3.html" class="block py-2 text-white">Our Approach</a>
-      <a href="index4.html" class="block py-2 text-white">Our Services</a>
-      <a href="index5.html" class="block py-2 text-white">About</a>
+      <!-- Animated Line -->
+      <div id="timelineLine" class="timeline-line"></div>
 
-      <!-- Button (Visible in Mobile Menu & Desktop) -->
-       <a href="index6.html"
-           class="w-full md:w-auto flex items-center justify-center rounded-[58px]  
-                  text-sm sm:text-base font-semibold shadow bg-white transition h-[40px] md:ml-4 px-6">
-          Let’s Talk
-        </a>
-    </nav>
+      <!-- Item 1 -->
+      <div class="relative mb-20 flex flex-col sm:flex-row reveal">
+        <div class="sm:w-1/2 sm:pr-12 sm:text-right">
+          <div class="timeline-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" class="company-logo" />
+            <span class="badge">Jan 2024 – Present</span>
+            <h3 class="text-xl font-semibold">Frontend Developer Intern</h3>
+            <p class="text-blue-400 text-sm mb-2">ABC Tech Solutions</p>
+            <p class="text-gray-400">
+              Developed responsive UI components using Tailwind CSS and JavaScript,
+              collaborated with designers and backend developers.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="relative mb-20 flex flex-col sm:flex-row justify-end reveal">
+        <div class="sm:w-1/2 sm:pl-12">
+          <div class="timeline-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" class="company-logo" />
+            <span class="badge">2023 – 2024</span>
+            <h3 class="text-xl font-semibold">Full Stack Developer</h3>
+            <p class="text-blue-400 text-sm mb-2">Personal Projects</p>
+            <p class="text-gray-400">
+              Built full-stack web apps using React, Node.js, Express, and MongoDB
+              with authentication and REST APIs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="relative flex flex-col sm:flex-row reveal">
+        <div class="sm:w-1/2 sm:pr-12 sm:text-right">
+          <div class="timeline-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" class="company-logo" />
+            <span class="badge">Ongoing</span>
+            <h3 class="text-xl font-semibold">Computer Science Student</h3>
+            <p class="text-blue-400 text-sm mb-2">University</p>
+            <p class="text-gray-400">
+              Strengthening foundations in algorithms, databases,
+              software engineering, and system design.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</header>
+</section>
+<!-- RESUME SECTION -->
+<section class="py-10 bg-[#020617]">
+  <div class="max-w-[1440px] mx-auto px-6 text-center reveal">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+      Download My <span class="text-blue-400">Resume</span>
+    </h2>
+    <p class="text-gray-400 mb-8">
+      A detailed overview of my skills, experience, and education.
+    </p>
 
-<script>
-  // Mobile menu toggle with smooth slide animation
+    <a
+      href="resume/Danish_Resume.pdf"
+      download
+      class="inline-flex items-center gap-3 px-8 py-4
+             border border-blue-400 text-blue-400
+             hover:bg-blue-400 hover:text-black
+             transition rounded-md font-medium"
+    >
+      <i data-feather="download"></i>
+      Download Resume
+    </a>
+  </div>
+</section>
+<!-- PROJECTS SECTION -->
+<section id="projects" class="min-h-screen py-10 bg-[#020617] relative">
+  <div class="max-w-[1440px] mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-20 reveal">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        My <span class="text-blue-400">Projects</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto">
+        Some of the projects I’ve built to sharpen my skills
+        and solve real-world problems.
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+    >
+
+      <!-- Project Card -->
+<div
+  class="project-card reveal cursor-pointer"
+  onclick="openProjectModal(this)"
+  data-title="Portfolio Website"
+  data-desc="A modern responsive portfolio built using Tailwind CSS, smooth animations, particles background, and interactive UI components."
+  data-tech="HTML, Tailwind CSS, JavaScript, tsParticles"
+  data-image="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+  data-live="https://your-portfolio-link.com"
+  data-code="https://github.com/yourusername/portfolio"
+>
+  <div
+    class="project-img"
+    style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085');"
+  ></div>
+
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-2">Portfolio Website</h3>
+    <p class="text-gray-400 text-sm mb-4">
+      Modern personal portfolio with animations and responsive design.
+    </p>
+  </div>
+</div>
+
+      <!-- Project Card -->
+<div
+  class="project-card reveal cursor-pointer"
+  onclick="openProjectModal(this)"
+  data-title="Task Manager App"
+  data-desc="A full-stack task management application with authentication, CRUD operations, and RESTful APIs."
+  data-tech="React, Node.js, Express, MongoDB"
+  data-image="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
+  data-live="https://task-manager-demo.com"
+  data-code="https://github.com/yourusername/task-manager"
+>
+  <div
+    class="project-img"
+    style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c');"
+  ></div>
+
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-2">Task Manager App</h3>
+    <p class="text-gray-400 text-sm mb-4">
+      Full-stack app with authentication and REST APIs.
+    </p>
+  </div>
+</div>
+
+<div
+  class="project-card reveal cursor-pointer"
+  onclick="openProjectModal(this)"
+  data-title="E-Commerce Website"
+  data-desc="A fully functional e-commerce platform featuring product filtering, cart, checkout flow, and payment integration."
+  data-tech="Next.js, Stripe, Firebase"
+  data-image="https://images.unsplash.com/photo-1515879218367-8466d910aaa4"
+  data-live="https://ecommerce-demo.com"
+  data-code="https://github.com/yourusername/ecommerce-app"
+>
+  <div
+    class="project-img"
+    style="background-image: url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4');"
+  ></div>
+
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-2">E-Commerce Website</h3>
+    <p class="text-gray-400 text-sm mb-4">
+      Online store with cart, checkout, and payments.
+    </p>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="min-h-screen py-10 bg-[#020617] relative">
+  <div class="max-w-[1440px] mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-20 reveal">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        About <span class="text-blue-400">Me</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto">
+        Get to know who I am, what I do, and what drives me.
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-14 items-center"
+    >
+      <!-- LEFT: TEXT -->
+      <div class="reveal">
+        <h3 class="text-2xl font-semibold mb-4">
+          Hi, I'm <span class="text-blue-400">Danish</span>
+        </h3>
+
+        <p class="text-gray-400 mb-4 leading-relaxed">
+          I’m a Computer Science student and aspiring Full Stack Developer
+          with a strong passion for building clean, modern, and scalable
+          web applications. I enjoy turning complex problems into simple,
+          beautiful, and intuitive user experiences.
+        </p>
+
+        <p class="text-gray-400 mb-6 leading-relaxed">
+          I specialize in frontend and backend technologies, love learning
+          new tools, and continuously work on improving my skills through
+          hands-on projects and real-world problem solving.
+        </p>
+
+        <!-- Highlights -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="about-box">
+            <h4 class="text-xl font-bold text-blue-400">10+</h4>
+            <p class="text-gray-400 text-sm">Projects Completed</p>
+          </div>
+
+          <div class="about-box">
+            <h4 class="text-xl font-bold text-blue-400">2+</h4>
+            <p class="text-gray-400 text-sm">Years Learning</p>
+          </div>
+
+          <div class="about-box">
+            <h4 class="text-xl font-bold text-blue-400">5+</h4>
+            <p class="text-gray-400 text-sm">Technologies</p>
+          </div>
+
+          <div class="about-box">
+            <h4 class="text-xl font-bold text-blue-400">100%</h4>
+            <p class="text-gray-400 text-sm">Passion</p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-4 flex-wrap">
+          <a
+            href="#contact"
+            class="px-6 py-3 border border-blue-400 text-blue-400
+                   hover:bg-blue-400 hover:text-black transition rounded-md"
+          >
+            Contact Me
+          </a>
+
+          <a
+            href="resume/Danish_Resume.pdf"
+            download
+            class="px-6 py-3 border border-gray-500 text-gray-300
+                   hover:bg-gray-700 transition rounded-md"
+          >
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: INFO CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal">
+
+        <div class="about-card">
+          <h4 class="font-semibold mb-2">Frontend Development</h4>
+          <p class="text-gray-400 text-sm">
+            Creating responsive, interactive, and accessible UIs
+            using modern frameworks and tools.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h4 class="font-semibold mb-2">Backend Development</h4>
+          <p class="text-gray-400 text-sm">
+            Building secure APIs, databases, and server-side logic
+            with scalable architectures.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h4 class="font-semibold mb-2">Problem Solving</h4>
+          <p class="text-gray-400 text-sm">
+            Strong analytical thinking with a focus on clean,
+            maintainable, and efficient solutions.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h4 class="font-semibold mb-2">Continuous Learning</h4>
+          <p class="text-gray-400 text-sm">
+            Always exploring new technologies and improving
+            through practice and experimentation.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- CONTACT SECTION -->
+<section id="contact" class="min-h-screen py-10 bg-[#020617] relative overflow-hidden">
+  <div class="max-w-[1440px] mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-24 reveal">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        Contact <span class="text-blue-400">Me</span>
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto">
+        Have a project, idea, or opportunity? Let’s talk.
+      </p>
+    </div>
+
+    <!-- Contact Wrapper -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+      <!-- Left Info -->
+      <div class="reveal">
+        <h3 class="text-3xl font-semibold mb-6">
+          Let’s build something
+          <span class="text-blue-400">amazing</span> 🚀
+        </h3>
+
+        <p class="text-gray-400 mb-8 leading-relaxed">
+          I’m always open to discussing new projects, creative ideas,
+          or opportunities to be part of your vision.
+        </p>
+
+        <div class="space-y-6 text-gray-400">
+          <p class="flex items-center gap-3">
+            <i data-feather="mail" class="text-blue-400"></i>
+            your.email@example.com
+          </p>
+          <p class="flex items-center gap-3">
+            <i data-feather="map-pin" class="text-blue-400"></i>
+            Your City, Country
+          </p>
+        </div>
+      </div>
+
+      <!-- Form Card -->
+      <div
+        class="reveal relative bg-[#020617]/70 backdrop-blur-xl
+               border border-blue-500/30 rounded-2xl
+               p-8 md:p-10 shadow-xl"
+      >
+
+        <!-- Glow -->
+        <div class="absolute -inset-1 bg-blue-500/20 blur-2xl rounded-2xl"></div>
+
+        <form id="contactForm" class="relative space-y-6">
+
+          <!-- Name -->
+          <div class="relative">
+            <i data-feather="user"
+               class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="text"
+              id="name"
+              placeholder="Your Name"
+              class="w-full pl-12 pr-4 py-3 bg-transparent
+                     border border-gray-600 rounded-lg
+                     focus:border-blue-400 focus:ring-1 focus:ring-blue-400
+                     outline-none transition"
+            />
+            <small class="text-red-400 hidden" id="nameError">Name is required</small>
+          </div>
+
+          <!-- Email -->
+          <div class="relative">
+            <i data-feather="mail"
+               class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="email"
+              id="email"
+              placeholder="Your Email"
+              class="w-full pl-12 pr-4 py-3 bg-transparent
+                     border border-gray-600 rounded-lg
+                     focus:border-blue-400 focus:ring-1 focus:ring-blue-400
+                     outline-none transition"
+            />
+            <small class="text-red-400 hidden" id="emailError">Valid email required</small>
+          </div>
+
+          <!-- Message -->
+          <div class="relative">
+            <i data-feather="message-square"
+               class="absolute left-4 top-4 text-gray-400"></i>
+            <textarea
+              id="message"
+              rows="5"
+              placeholder="Your Message"
+              class="w-full pl-12 pr-4 py-3 bg-transparent
+                     border border-gray-600 rounded-lg
+                     focus:border-blue-400 focus:ring-1 focus:ring-blue-400
+                     outline-none transition resize-none"
+            ></textarea>
+            <small class="text-red-400 hidden" id="messageError">Message required</small>
+          </div>
+
+          <!-- Button -->
+          <button
+  type="submit"
+  id="sendBtn"
+  class="w-full py-3 mt-4 font-medium rounded-lg
+         bg-gradient-to-r from-blue-500 to-cyan-400
+         text-black flex items-center justify-center gap-3
+         hover:scale-[1.02] transition-transform"
+>
+  <span id="btnText">Send Message</span>
+  <span id="btnSpinner" class="spinner hidden"></span>
+</button>
+
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT MODAL -->
+<div id="projectModal" class="modal">
+  <div class="modal-content relative">
+    <span class="modal-close" onclick="closeProjectModal()">
+      <i data-feather="x"></i>
+    </span>
+
+    <img id="modalImage" class="modal-img" />
+
+    <h3 id="modalTitle" class="text-2xl font-bold mb-2"></h3>
+    <p id="modalDesc" class="text-gray-400 mb-4"></p>
+
+    <div id="modalTech" class="flex flex-wrap gap-2 mb-6"></div>
+
+    <div class="flex gap-4">
+      <a
+        id="modalLive"
+        target="_blank"
+        class="px-5 py-2 border border-blue-400 text-blue-400 rounded-md hover:bg-blue-400 hover:text-black transition"
+      >
+        Live Demo
+      </a>
+      <a
+        id="modalCode"
+        target="_blank"
+        class="px-5 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700 transition"
+      >
+        Source Code
+      </a>
+    </div>
+  </div>
+</div>
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="popup">
+  <div class="popup-box">
+    <i data-feather="check-circle" class="text-blue-400 mb-4"></i>
+    <h3 class="text-xl font-semibold mb-2">Message Sent!</h3>
+    <p class="text-gray-400 mb-6">
+      Thank you for reaching out. I’ll get back to you soon.
+    </p>
+    <button
+      onclick="closePopup()"
+      class="px-6 py-2 border border-blue-400 text-blue-400
+             hover:bg-blue-400 hover:text-black transition rounded-md"
+    >
+      Close
+    </button>
+  </div>
+</div>
+<!-- FOOTER -->
+<footer class="relative bg-[#020617] border-t border-blue-500/20 mt-20">
+  <div class="max-w-[1440px] mx-auto px-6 py-12 text-center">
+
+    <!-- Name / Brand -->
+    <h3 class="text-2xl font-semibold mb-2">
+      Danish
+    </h3>
+
+    <p class="text-gray-400 mb-8 max-w-md mx-auto">
+      Building modern, scalable, and visually engaging web experiences.
+    </p>
+          <div class="flex justify-center gap-8 mb-8">
+  <a href="https://linkedin.com/in/yourprofile" target="_blank" class="footer-icon">
+    <i data-feather="linkedin"></i>
+  </a>
+  <a href="https://github.com/yourprofile" target="_blank" class="footer-icon">
+    <i data-feather="github"></i>
+  </a>
+  <a href="mailto:your.email@example.com" class="footer-icon">
+    <i data-feather="mail"></i>
+  </a>
+  <a href="https://instagram.com/yourprofile" target="_blank" class="footer-icon">
+    <i data-feather="instagram"></i>
+  </a>
+</div>
+
+
+    <!-- Divider -->
+    <div class="w-full h-px bg-blue-500/20 mb-6"></div>
+
+    <!-- Copyright -->
+    <p class="text-gray-500 text-sm">
+      © 2025 Danish. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+    <!-- Typed -->
+    <script>
+      new Typed("#typed-text", {
+        strings: [
+          "Computer Science Student",
+          "Full Stack Developer",
+        ],
+        typeSpeed: 50,
+        backSpeed: 50,
+        loop: true,
+      });
+    </script>
+ <script>
   const menuBtn = document.getElementById("menu-btn");
   const menu = document.getElementById("menu");
 
   menuBtn.addEventListener("click", () => {
+     // Toggle hamburger → X
+  menuBtn.classList.toggle("open");
+    // Toggle slide animation
+    menu.classList.toggle("open");
+
+    // Handle visibility for max-height animation
     if (menu.classList.contains("hidden")) {
       menu.classList.remove("hidden");
-      setTimeout(() => {
-        menu.classList.remove("max-h-0");
-        menu.classList.add("max-h-[500px]", "py-4");
-      }, 10);
+      menu.classList.remove("max-h-0");
+      menu.classList.add("max-h-screen");
     } else {
       menu.classList.add("max-h-0");
-      menu.classList.remove("max-h-[500px]", "py-4");
-      setTimeout(() => {
-        menu.classList.add("hidden");
-      }, 500); // match duration-500
+      setTimeout(() => menu.classList.add("hidden"), 500);
+      menu.classList.remove("max-h-screen");
     }
   });
 </script>
-
-  <!-- HERO WITH SWIPER -->
-<section class="relative w-full h-screen overflow-hidden">
-
-  <!-- Swiper Container --> 
-  <div class="swiper h-full"> 
-    <div class="swiper-wrapper">
-
-
-         <!-- Slide 1 -->
-    <div class="swiper-slide relative"> 
-      <img src="images/Carasaul.png" alt="Slide 1" class="w-full h-full object-cover" /> 
-      <div class="absolute z-10 left-3 sm:left-6 md:left-10 lg:left-[42px]
-                  bottom-16
-                  px-2 sm:px-0"> 
-        <h1 class="font-medium text-white max-w-[90%] sm:max-w-[700px] md:max-w-[957px] 
-                   text-2xl sm:text-3xl md:text-4xl lg:text-[53px] 
-                   leading-snug sm:leading-tight md:leading-[56px] lg:leading-[66px]">
-          <span class="block">We Build Product That Builds</span> 
-          <span class="block">Futures</span> 
-        </h1> 
-      </div> 
-    </div> 
-
-      <!-- Slide 2 -->
-      <div class="swiper-slide relative"> 
-        <img src="images/Carasaul-1.png" alt="Slide 2" class="w-full h-full object-cover" /> 
-        <div class="absolute z-10 left-3 sm:left-6 md:left-10 lg:left-[42px] 
-                    bottom-16 
-                    px-2 sm:px-0"> 
-          <h1 class="font-medium text-white max-w-[90%] sm:max-w-[700px] md:max-w-[957px] 
-                     text-2xl sm:text-3xl md:text-4xl lg:text-[53px] 
-                     leading-snug sm:leading-tight md:leading-[56px] lg:leading-[66px]">
-            <span class="block">Smart Software, Powered by AI.</span> 
-            <span class="block">Designed for Market Success</span> 
-          </h1> 
-        </div> 
-      </div> 
-
-      <!-- Slide 3 -->
-      <div class="swiper-slide relative"> 
-        <img src="images/Carasaul-2.png" alt="Slide 3" class="w-full h-full object-cover" /> 
-        <div class="absolute z-10 left-3 sm:left-6 md:left-10 lg:left-[42px] 
-                    bottom-16 
-                    px-2 sm:px-0"> 
-          <h1 class="font-medium text-white max-w-[90%] sm:max-w-[700px] md:max-w-[957px] 
-                     text-2xl sm:text-3xl md:text-4xl lg:text-[53px] 
-                     leading-snug sm:leading-tight md:leading-[56px] lg:leading-[66px]">
-            <span class="block">E-Commerce that learns, adapts,</span> 
-            <span class="block">and Grows with AI</span> 
-          </h1> 
-        </div> 
-      </div>
-
-      <!-- Slide 4 -->
-      <div class="swiper-slide relative"> 
-        <img src="images/Carasaul-3.png" alt="Slide 4" class="w-full h-full object-cover" /> 
-        <div class="absolute z-10 left-3 sm:left-6 md:left-10 lg:left-[42px] 
-                    bottom-16 
-                    px-2 sm:px-0"> 
-          <h1 class="font-medium text-white max-w-[90%] sm:max-w-[700px] md:max-w-[957px] 
-                     text-2xl sm:text-3xl md:text-4xl lg:text-[53px] 
-                     leading-snug sm:leading-tight md:leading-[56px] lg:leading-[66px]">
-            <span class="block">Intelligent Apps That Learn, Adapt,</span> 
-            <span class="block">and Engage</span> 
-          </h1> 
-        </div> 
-      </div> 
-
-      <!-- Slide 5 -->
-      <div class="swiper-slide relative"> 
-        <img src="images/Carasaul-4.png" alt="Slide 5" class="w-full h-full object-cover" /> 
-        <div class="absolute z-10 left-3 sm:left-6 md:left-10 lg:left-[42px] 
-                    bottom-16 
-                    px-2 sm:px-0"> 
-          <h1 class="font-medium text-white max-w-[90%] sm:max-w-[700px] md:max-w-[957px] 
-                     text-2xl sm:text-3xl md:text-4xl lg:text-[53px] 
-                     leading-snug sm:leading-tight md:leading-[56px] lg:leading-[66px]">
-            <span class="block">AI Powered CRM That Understands</span> 
-            <span class="block">Your Customers</span> 
-          </h1> 
-        </div> 
-      </div> 
-    </div>
-
-    <!-- Pagination (Dots) -->
-    <div class="swiper-pagination !bottom-4 sm:!bottom-6 z-10 flex justify-center items-center"></div>
-  </div>
-
-  <!-- Gradient Overlay -->
-  <div class="absolute bottom-0 left-0 w-full h-[120px] sm:h-[200px] md:h-[300px] lg:h-[400px] 
-              bg-gradient-to-t from-black to-transparent"></div>
-  <!-- Dark Overlay -->
-  <div class="absolute inset-0 bg-black/40"></div>
-</section>
-
-
-
-<div class="bg-white font-sans antialiased">
-  <section class="max-w-[1220px] mx-auto px-4 sm:px-6 py-10 sm:py-16">
-  <!-- Section Heading -->
-  <div class="text-center mb-12">
-    <h3 class="text-gray-600 text-[18px] sm:text-[20px] md:text-[22px] font-normal font-['Lexend']">
-      Choose Us
-    </h3>
-    <h2 class="text-slate-900 text-[28px] sm:text-[32px] md:text-[36px] lg:text-[39px] font-semibold font-['Lexend'] mt-2 leading-tight">
-      Why Choose Us?
-    </h2>
-  </div>
-
-  <!-- Two Columns -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-    
-    <!-- Left Image -->
-    <div class="w-full">
-      <img src="images/whyChoseUs.jpg" alt="Why Choose Us"
-           class="w-full h-auto object-cover rounded-[24px] shadow-lg" />
-    </div>
-
-    <!-- Right Features -->
-    <div class="flex flex-col gap-6">
-      
-      <!-- Feature 1 -->
-      <div class="flex items-start gap-4">
-        <div class="min-w-[50px] min-h-[50px] sm:w-[63px] sm:h-[63px] flex items-center justify-center rounded-md border-2.4 border-white bg-[#EA6AA7]">
-          <img src="logo/lightlogo/Agency.png" alt="Agency Icon" class="w-6 h-6" />
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-slate-900">Advanced Innovative Agency</h3>
-          <p class="text-sm sm:text-base text-gray-600 mt-1 font-['Lexend'] text-justify">
-            Our experienced developers are skilled in the latest technologies, ensuring innovative and high-quality solutions for your business needs.
-          </p>
-        </div>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="flex items-start gap-4">
-        <div class="min-w-[50px] min-h-[50px] sm:w-[63px] sm:h-[63px] flex items-center justify-center rounded-md border-2.4 border-white bg-[#41ADFB]">
-          <img src="logo/lightlogo/Solutions.png" alt="Solutions Icon" class="w-6 h-6" />
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-slate-900">Customized Solutions</h3>
-          <p class="text-sm sm:text-base text-gray-600 mt-1 font-['Lexend'] text-justify">
-            We tailor every project to meet the unique requirements of each client, delivering solutions that perfectly align with your business goals.
-          </p>
-        </div>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="flex items-start gap-4">
-        <div class="min-w-[50px] min-h-[50px] sm:w-[63px] sm:h-[63px] flex items-center justify-center rounded-md border-2.4 border-white bg-[#D36464]">
-          <img src="logo/lightlogo/Delivery.png" alt="Delivery Icon" class="w-6 h-6" />
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-slate-900">On-Time Delivery</h3>
-          <p class="text-sm sm:text-base text-gray-600 mt-1 font-['Lexend'] text-justify">
-            We understand the importance of time in business, which is why we prioritize efficient project management to deliver on schedule.
-          </p>
-        </div>
-      </div>
-
-      <!-- Feature 4 -->
-      <div class="flex items-start gap-4">
-        <div class="min-w-[50px] min-h-[50px] sm:w-[63px] sm:h-[63px] flex items-center justify-center rounded-md border-2.4 border-white bg-[#F6B273]">
-          <img src="logo/lightlogo/Pricing.png" alt="Pricing Icon" class="w-6 h-6" />
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-slate-900">Affordable Pricing</h3>
-          <p class="text-sm sm:text-base text-gray-600 mt-1 font-['Lexend'] text-justify">
-            We offer competitive rates without compromising on quality, making us an excellent choice for cost-effective solutions.
-          </p>
-        </div>
-      </div>
-
-    </div> <!-- End Right Features -->
-  </div> <!-- End Grid -->
-</section>
-</div>
-
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    const swiper = new Swiper(".swiper", {
-      loop: true,
-      autoplay: {
-        delay: 4000,
-        disableOnInteraction: false,
-        stopOnLastSlide: true,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true, // turn off shrink behavior
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      effect: "fade",
-      speed: 800,
-    });
-  </script>
-
-
-<div class="bg-[#F7F7F7] font-sans antialiased">
-
-  <!-- Outer Section -->
-  <section class="bg-[#F7F7F7] w-full flex justify-center">
-    
-    <!-- Frame Wrapper -->
-    <div class="relative w-full max-w-[1442px] h-auto 
-                px-4 sm:px-6 py-8 sm:py-12 lg:px-[80px] lg:py-[80px] 
-                mx-auto">
-
-      <!-- Inner Container -->
-      <div class="flex flex-col gap-[32px] sm:gap-[40px] lg:gap-[80px]">
-
-        <!-- Top Heading Box -->
-        <div class="relative flex flex-col gap-[20px] sm:gap-[24px] lg:gap-[32px] 
-                    text-center lg:text-left 
-                    w-full max-w-[1282px] h-auto lg:h-[352px] mx-auto">
-
-          <!-- Heading -->
-          <h2 class="text-[#012F55] font-['Lexend'] font-bold
-                    text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] xl:text-[48px] 
-                    leading-[30px] sm:leading-[36px] md:leading-[48px] lg:leading-[60px] xl:leading-[80px]
-                    max-w-[709px] w-full text-center lg:text-left mx-auto lg:mx-0 px-2">
-            We Deliver the Right <br/>
-            <span class="block lg:inline">Solutions with Unmatched Quality</span>
-          </h2>
-
-          <!-- Paragraph -->
-          <p class="text-[#4B5563] font-['Lexend'] font-light 
-                    text-[14px] sm:text-[16px] md:text-[18px] lg:text-[22px] 
-                    leading-[22px] sm:leading-[26px] md:leading-[32px] lg:leading-[40px] 
-                    tracking-normal 
-                    max-w-[1073px] w-full mx-auto lg:mx-0 px-2">
-            Whether you're seeking advanced cloud solutions, aiming to harness the power of AI, 
-            or looking to redefine the user experience, we are your comprehensive innovation partner.
-          </p>
-
-          <!-- Decorative Arrow -->
-        <div class="hidden sm:block absolute 
-            top-[10px] md:top-[20px] 
-            left-[60%] md:left-[65%] lg:left-[70%] 
-            transform -translate-x-1/2">
-            <img src="logo/lightlogo/arrow.png" 
-                alt="Decorative Paper Plane" 
-                class="w-[60px] sm:w-[100px] md:w-[160px] lg:w-[200px] xl:w-[288px] 
-                      h-auto opacity-90" />
-          </div>
-        </div>
-
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-                    gap-6 sm:gap-8 md:gap-10 lg:gap-[80px] 
-                    w-full max-w-[1282px] h-auto 
-                    mx-auto lg:mx-0 lg:mt-[80px]">
-
-          <!-- Example Card -->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[16px] sm:gap-[20px] 
-                      w-full h-auto p-4 sm:p-6 lg:p-7
-                      sm:w-[90%] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px]">
-            
-            <img src="logo/darklogo/artificial-intelligent.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10"/>
-
-            <div class="flex flex-col gap-[6px] sm:gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold text-base sm:text-lg">
-                Machine Learning & AI
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Take advantage of advanced AI.
-              </p>
-            </div>
-          </div>
-
-          <!-- 🔁 Repeat for other cards -->
-           <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/analytics.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Data Engineering & Analytics
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Gain richer Customer insights.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 3-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/design.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                UX/UI Design
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Deliver great user experiences.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 4-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/product-development.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Product Development
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Make your product idea its best.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 5-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/enterprise.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Enterprise Software
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Cut cost and improve operations.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 6-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/app-development.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Mobile App Development
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Get a mobile app that wows.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 7-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/roi.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                DevOps CI/CD
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Improve efficiency and ROI.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 8-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/qa.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Quality Assurance
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Be sure of your product's quality.
-              </p>
-            </div>
-          </div>
-
-          <!-- Example Card 9-->
-          <div class="bg-white rounded-[12px] border border-white 
-                      shadow-[0_4px_38px_0_rgba(0,0,0,0.05)] 
-                      flex flex-col gap-[20px] 
-                      w-full h-auto p-5 sm:p-6 lg:p-7
-                      sm:w-[320px] md:w-[360px] 
-                      lg:w-[396px] lg:h-[212px] 
-                      lg:pt-[36px] lg:pr-[28px] lg:pb-[36px] lg:pl-[28px]">
-            
-            <img src="logo/darklogo/web-development.png" 
-                 alt="AI Icon" 
-                 class="w-10 h-10" />
-
-            <div class="flex flex-col gap-[8px]">
-              <h3 class="text-[#282C4B] font-semibold 
-                         text-base sm:text-lg lg:text-lg">
-                Web Development
-              </h3>
-              <p class="text-[#282C4B] text-sm sm:text-base">
-                Get a fresh, engaging web app.
-              </p>
-            </div>
-          </div>
-        </div> <!-- End Grid -->
-
-      </div> <!-- End Inner Container -->
-    </div> <!-- End Frame Wrapper -->
-  </section>
-</div>
-
-<div class="bg-white font-sans">
-
-  <!-- Section -->
-  <section class="max-w-[1280px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
-    <!-- Heading -->
-    <div class="text-center mb-8 sm:mb-12">
-      <h2 class=" text-[#012F55] text-[24px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-[Lexend] font-semibold text-gray-900">
-        Our work speaks for itself...
-      </h2>
-      <p class="text-[#415C71] text-[14px] sm:text-[16px] md:text-[18px] lg:text-[25px] text-gray-500 mt-2 font-[Lexend] font-light">
-        Our design-first approach has helped transform innovative businesses like these.
-      </p>
-    </div>
-
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-
-      <!-- Card 1 -->
-<div class="bg-white rounded-lg flex flex-col items-center 
-            w-full max-w-[611.56px] h-auto lg:h-[539px] p-3 sm:p-4 mx-auto">
-
-  <!-- Image -->
-  <img src="images/work1.png" alt="Work 1" 
-       class=" w-full h-auto object-contain  mb-4">
-
-  <!-- Text -->
-  <p class="text-[#012F55] font-medium font-[Lexend]
-             text-[16px] sm:text-[18px] md:text-[20px] lg:text-[24px] 
-             leading-[24px] sm:leading-[28px] md:leading-[30px] lg:leading-[35.56px] 
-              justify-center">
-    One for the best solution we design and developed which help to track security guards
-  </p>
-</div>
-
-      <!-- Card 2 -->
-       <div class="bg-white rounded-lg flex flex-col items-center 
-            w-full max-w-[611.56px] h-auto lg:h-[539px] p-3 sm:p-4 mx-auto">
-
-  <!-- Image -->
-  <img src="images/work2.png" alt="Work 2" 
-       class=" w-full h-auto object-contain  mb-4">
-
-  <!-- Text -->
-  <p class="text-[#012F55] font-medium font-[Lexend]
-             text-[16px] sm:text-[18px] md:text-[20px] lg:text-[24px] 
-             leading-[24px] sm:leading-[28px] md:leading-[30px] lg:leading-[35.56px] 
-              justify-center">
-   Helped all categories people where they can go and learn play, and win
-  </p>
-</div>
-
-      <!-- Card 3 -->
-      <div class="bg-white rounded-lg  flex flex-col items-center 
-            w-full max-w-[611.56px] h-auto lg:h-[539px] p-3 sm:p-4 mx-auto">
-
-  <!-- Image -->
-  <img src="images/work3.png" alt="Work 3" 
-       class=" w-full h-auto object-contain  mb-4">
-
-  <!-- Text -->
-  <p class="text-[#012F55] font-medium font-[Lexend]
-             text-[16px] sm:text-[18px] md:text-[20px] lg:text-[24px] 
-             leading-[24px] sm:leading-[28px] md:leading-[30px] lg:leading-[35.56px] 
-              justify-center">
-      We also help 10,000k+ patient and 
-  <span class="hidden lg:inline"><br /></span>
-  students where they can register for
-  exam or certificates
-  </p>
-</div>
-
-      <!-- Card 4 -->
-      <div class="bg-white rounded-lg  flex flex-col items-center 
-            w-full max-w-[611.56px] h-auto lg:h-[539px] p-3 sm:p-4 mx-auto">
-
-  <!-- Image -->
-  <img src="images/work4.png" alt="Work 4" 
-       class=" w-full h-auto object-contain  mb-4">
-
-  <!-- Text -->
-  <p class="text-[#012F55] font-medium font-[Lexend]
-             text-[16px] sm:text-[18px] md:text-[20px] lg:text-[24px] 
-             leading-[24px] sm:leading-[28px] md:leading-[30px] lg:leading-[35.56px] 
-              justify-center">
-    One for the best solution we design and developed which help to track security guards
-  </p>
-</div>
-
-    </div>
-  </section>
-</div>
-
-<style>
-    body {
-      font-family: 'Lexend', sans-serif;
+<script>
+  const revealElements = document.querySelectorAll(".reveal");
+
+  const revealOnScroll = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          revealOnScroll.unobserve(entry.target); // animate once
+        }
+      });
+    },
+    {
+      threshold: 0.15, // reveal when 15% visible
     }
-  </style>
-</head>
+  );
 
-<div class="bg-white flex items-center justify-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-  <a href="index7.html"
-     class="text-[#12334E] text-[18px] leading-[24px] font-normal capitalize border border-[#1C2B3A] border-[1px] rounded-full px-6 py-[14px] hover:bg-gray-100 transition min-w-[191px] min-h-[52px] flex items-center justify-center gap-2">
-    View More Work
-  </a>
-</div>
+  revealElements.forEach((el) => revealOnScroll.observe(el));
+</script>
+<script>
+  const timeline = document.getElementById("timelineLine");
 
-<div class="m-0 p-0 box-border font-[Lexend]">
+  const timelineObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          timeline.classList.add("active");
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
 
-  <!-- Footer Section -->
-  <section class="bg-[#003866] text-white w-full">
-    <div class="max-w-[1280px] mx-auto px-6 sm:px-10 lg:px-20 py-12 lg:py-[72px] flex flex-col justify-between min-h-[593px]">
+  timelineObserver.observe(timeline);
+</script>
+<script>
+  const modal = document.getElementById("projectModal");
 
-      <!-- Upper Box (Heading + Description) -->
-      <div class="text-left mb-12"> <!-- same padding as inner box -->
-        <h2 class="text-[22px] sm:text-[26px] lg:text-[36px] font-semibold mb-4">
-          How We Augment Your Business Growth!
-        </h2>
-        <p class="max-w-[1207px]
-           text-[16px] leading-[22px] 
-           sm:text-[18px] sm:leading-[26px] 
-           leading-[150%] tracking-[0.5px] text-justify
-           font-light font-[Lexend] text-gray-200 text-justify">
-  We create innovative software solutions built to scale with your business. By combining cutting-edge 
-  technology with deep industry expertise, our team delivers applications and services that streamline 
-  operations, boost customer engagement, and drive efficiency. From custom development to seamless 
-  integration, we empower your growth at every stage—helping you stay ahead in an increasingly 
-  competitive digital landscape.
-</p>
-      </div>
+  function openProjectModal(card) {
+    document.getElementById("modalTitle").innerText =
+      card.dataset.title;
+    document.getElementById("modalDesc").innerText =
+      card.dataset.desc;
+    document.getElementById("modalImage").src =
+      card.dataset.image;
 
-      <!-- Inner Box (Main Features Grid) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[30px]">
-        
-        <!-- Card 1 -->
-        <div class="flex flex-col gap-4">
-          <img src="logo/lightlogo/icon1.svg" alt="Coordination" class="w-10 h-10 sm:w-12 sm:h-12 mb-2">
-          <h3 class="font-semibold text-[15px] sm:text-[16px] md:text-[18px] mb-1 text-left whitespace-nowrap">
-            Coordination
-          </h3>
-          <p class="font-light text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-gray-300 leading-snug text-left">
-            We also help 10,000k+ patient and students where they can register for exam or certificates
-          </p>
-        </div>
+    document.getElementById("modalLive").href =
+      card.dataset.live;
+    document.getElementById("modalCode").href =
+      card.dataset.code;
 
-        <!-- Card 2 -->
-        <div class="flex flex-col gap-4">
-          <img src="logo/lightlogo/icon2.svg" alt="Flexible Technologies" class="w-10 h-10 sm:w-12 sm:h-12 mb-2">
-          <h3 class="font-semibold text-[15px] sm:text-[16px] md:text-[18px] mb-1 text-left whitespace-nowrap">
-            Flexible Technologies
-          </h3>
-          <p class="font-light text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-gray-300 leading-snug text-left">
-            We design systems that evolve with your business, seamlessly adapting to emerging demands and new opportunities.
-          </p>
-        </div>
+    const techContainer = document.getElementById("modalTech");
+    techContainer.innerHTML = "";
+    card.dataset.tech.split(",").forEach((tech) => {
+      const span = document.createElement("span");
+      span.className = "project-tag";
+      span.innerText = tech.trim();
+      techContainer.appendChild(span);
+    });
 
-        <!-- Card 3 -->
-        <div class="flex flex-col gap-4">
-          <img src="logo/lightlogo/icon3.svg" alt="End-to-End Project" class="w-10 h-10 sm:w-12 sm:h-12 mb-2">
-          <h3 class="font-semibold text-[15px] sm:text-[16px] md:text-[18px] mb-1 text-left whitespace-nowrap">
-            End-to-End Project
-          </h3>
-          <p class="font-light text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-gray-300 leading-snug text-left">
-            From strategy to deployment, we support you at every step—turning complex transformations into clear, achievable successes.
-          </p>
-        </div>
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
 
-        <!-- Card 4 -->
-        <div class="flex flex-col gap-4">
-          <img src="logo/lightlogo/icon4.svg" alt="Data-Driven Insights" class="w-10 h-10 sm:w-12 sm:h-12 mb-2">
-          <h3 class="font-semibold text-[15px] sm:text-[16px] md:text-[18px] mb-1 text-left whitespace-nowrap">
-            Data-Driven Insights
-          </h3>
-          <p class="font-light text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-gray-300 leading-snug text-left">
-            We begin by closely collaborating with you to understand your business goals—laying the foundation for innovative, tailored solutions.
-          </p>
-        </div>
+  function closeProjectModal() {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
 
-        <!-- Card 5 -->
-        <div class="flex flex-col gap-4">
-          <img src="logo/lightlogo/icon5.svg" alt="Custom Solutions" class="w-10 h-10 sm:w-12 sm:h-12 mb-2">
-          <h3 class="font-semibold text-[15px] sm:text-[16px] md:text-[18px] mb-1 text-left whitespace-nowrap">
-            Custom Solutions
-          </h3>
-          <p class="font-light text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] text-gray-300 leading-snug text-left">
-            Our team builds software precisely tailored to your business needs, ensuring seamless integration and exceptional performance.
-          </p>
-        </div>
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeProjectModal();
+  });
 
-      </div>
-    </div>
-  </section>
-</div>
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeProjectModal();
+  });
+</script>
+<script>
+const form = document.getElementById("contactForm");
+const sendBtn = document.getElementById("sendBtn");
+const btnText = document.getElementById("btnText");
+const btnSpinner = document.getElementById("btnSpinner");
+const popup = document.getElementById("successPopup");
 
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-<div class="bg-[#f8f9ff] text-[#12334E]">
+  let valid = true;
 
-  <section class="max-w-[1280px] mx-auto py-16 px-6 sm:px-10 lg:px-20">
-    <h2 class="text-[40px] sm:text-3xl md:text-4xl font-bold text-center mb-12">
-      What Our Clients Says?
-    </h2>
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const message = document.getElementById("message");
 
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-      
-      <!-- === Custom Full Image Placeholder === -->
-         <div class="relative flex items-start justify-center">
-        <!-- Replace below div with your <img> tag -->
-     <img src="images/client.svg" class="w-full h-full object-cover" />
-       
-      </div>
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const messageError = document.getElementById("messageError");
 
-      <!-- === Testimonial Text === -->
-<div class="w-full max-w-[611px] h-auto lg:h-[283px] text-center lg:text-left">
-  
-  <!-- Stars -->
-  <div class="flex justify-center lg:justify-start mb-4 text-yellow-400 text-lg">
-    ★ ★ ★ ★ ★
-  </div>
+  [nameError, emailError, messageError].forEach(e =>
+    e.classList.add("hidden")
+  );
 
-  <!-- Quote -->
-  <p class="text-gray-700 text-[20px] leading-relaxed mb-4">
-    “Es ist ein lang erwiesener Fakt, dass ein Leser vom Text abgelenkt wird, wenn er sich ein Layout ansieht.
-    Der Punkt, Lorem Ipsum zu nutzen, ist, dass es mehr oder weniger die normale Anordnung von Buchstaben darstellt
-    und somit nach lesbarer Sprache aussieht.”
-  </p>
+  if (name.value.trim() === "") {
+    nameError.classList.remove("hidden");
+    valid = false;
+  }
 
-  <!-- Author and Arrow Button Wrapper -->
-<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-4">
+  if (!email.value.includes("@")) {
+    emailError.classList.remove("hidden");
+    valid = false;
+  }
 
-  <!-- Author Name -->
-  <p class="font-semibold text-[#282C4B] text-[24px] text-center sm:text-left">
-    Alexander Gibson
-  </p>
+  if (message.value.trim() === "") {
+    messageError.classList.remove("hidden");
+    valid = false;
+  }
 
-  <!-- Arrow Button -->
-  <button class="transition flex items-center justify-center">
-    <div class="w-[104px] h-[59px]">
-      <img src="images/Arrow1.svg" alt="Arrow" class="w-full h-full object-contain" />
-    </div>
-  </button>
-</div>
-</div>
-</div>
-  </section>
-</div>
+  if (!valid) return;
+
+  sendBtn.disabled = true;
+  btnText.textContent = "Sending...";
+  btnSpinner.classList.remove("hidden");
+
+  try {
+    const res = await fetch("/send-message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name.value,
+        email: email.value,
+        message: message.value,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      popup.classList.add("active");
+      form.reset();
+    }
+
+  } catch (error) {
+    alert("Failed to send message");
+  }
+
+  btnText.textContent = "Send Message";
+  btnSpinner.classList.add("hidden");
+  sendBtn.disabled = false;
+});
+
+function closePopup() {
+  popup.classList.remove("active");
+}
 
 
+</script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    feather.replace();
+  });
+</script>
 
-<div class="w-full bg-white flex justify-center py-10">
-  <div class="w-full max-w-6xl ">
-    <!-- Timeline container -->
-    <div class="flex flex-wrap items-center justify-center gap-10 relative">
-      <!-- Line (hidden on mobile, shown on md+) -->
-      <div class="hidden md:block absolute top-1/2 left-0 right-0"></div>
-
-      <!-- Step 1 -->
-      <div class="w-[195px] h-[56px] flex items-center justify-center ">
-        <img src="logo/darklogo/logo1.png" 
-             alt="Step 1 Icon" 
-             class="max-h-full max-w-full object-contain" />
-      </div>
-
-      <!-- Step 2 -->
-      <div class="w-[195px] h-[56px] flex items-center justify-center">
-        <img src="logo/darklogo/logo2.svg" 
-             alt="Step 2 Icon" 
-             class="max-h-full max-w-full object-contain" />
-      </div>
-
-      <!-- Step 3 -->
-      <div class="w-[195px] h-[56px] flex items-center justify-center">
-        <img src="logo/darklogo/logo3.svg" 
-             alt="Step 3 Icon" 
-             class="max-h-full max-w-full object-contain" /> 
-      </div>
-
-      <!-- Step 4 -->
-      <div class="w-[195px] h-[56px] flex items-center justify-center">
-        <img src="logo/darklogo/logo4.svg" 
-             alt="Step 4 Icon" 
-             class="max-h-full max-w-full object-contain" /> 
-      </div>
-
-      <!-- Step 5 -->
-      <div class="w-[195px] h-[56px] flex items-center justify-center">
-        <img src="logo/darklogo/logo5.svg" 
-             alt="Step 5 Icon" 
-             class="max-h-full max-w-full object-contain" />
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="bg-white font-sans">
-  <section class="relative max-w-[1400px] mx-auto py-16 px-5 md:px-10 lg:px-20">
-    
-    <!-- Background dots image -->
-    <img src="images/dots.svg" alt="background dots"
-         class="absolute -left-1 top-10 w-40 opacity-60 pointer-events-none select-none md:w-32 sm:w-24" />
-
-    <!-- Section Heading -->
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-[#05345c] mb-12">
-      Latest News From Our Blog
-    </h2>
-
-    <!-- Blog Card Grid -->
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto">
-
-      <!-- === Card Template (Repeat 3x) === -->
-      <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <div class="relative">
-          <img src="images/blog1.svg" alt="Blog 1" class="w-full h-64 object-cover">
-          <div class="absolute -bottom-11 right-4 flex flex-col items-center text-center">
-            <!-- <div class="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-t-lg">Oct</div> -->
-             <div class="text-white text-xs font-semibold px-4 py-2 rounded-t-lg" style="background-color: #003866;">Oct</div>
-
-            <div class="bg-white px-4 py-2 text-[#003866] font-bold text-lg rounded-b-lg shadow-md">22</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <!-- <p class="text-gray-500 text-sm mb-1 text-[20px] font-normal">Jessica Alford</p> -->
-           <p class="text-[#717488]  font-inter font-normal text-[20px] leading-[12px] tracking-[0.1em]">Jessica Alford</p>
-           <div class="pt-6 pb-6 sm:text-left">
-          <h1 class="text-base sm:text-lg md:text-xl font-bold leading-snug text-[#012F55] font-bold">
-              How To Own Web Design Agency For Free
-          </h1>
-          </div>
-          <div class="mt-8 flex justify-end lg:justify-end md:justify-end sm:justify-start">
-            <img class="w-6 h-6" src="images/Arrow.svg" alt="Arrow">
-          </div>
-        </div>
-      </article>
-
-      <!-- === Card 2 === -->
-      <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <div class="relative">
-          <img src="images/blog2.svg" alt="Blog 2" class="w-full h-64 object-cover">
-          <div class="absolute -bottom-11 right-4 flex flex-col items-center text-center">
-            <!-- <div class="bg-blue-600  text-white text-xs font-semibold px-4 py-2 rounded-t-lg">Oct</div> -->
-             <div class="text-white text-xs font-semibold px-4 py-2 rounded-t-lg" style="background-color: #003866;"> Oct</div>
-
-            <div class="bg-white px-4 py-2 text-[#003866] font-bold text-lg rounded-b-lg shadow-md">22</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <!-- <p class="text-gray-500 text-sm mb-1">Jessica Alford</p> -->
-           <p class="text-[#717488]  font-inter font-normal text-[20px] leading-[12px] tracking-[0.1em]">Jessica Alford</p>
-          <div class="pt-6 pb-6 sm:text-left">
-          <h2 class="text-base sm:text-lg md:text-xl font-bold leading-snug text-[#012F55] font-bold">
-              5 Difficult Things About Web Design Agency
-          </h2>
-          </div>
-          <div class="mt-8 flex justify-end lg:justify-end md:justify-end sm:justify-start">
-            <img class="w-6 h-6" src="images/Arrow.svg" alt="Arrow">
-          </div>
-        </div>
-      </article>
-
-      <!-- === Card 3 === -->
-      <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <div class="relative">
-          <img src="images/blog3.svg" alt="Blog 3" class="w-full h-64 object-cover">
-          <div class="absolute -bottom-11 right-4 flex flex-col items-center text-center">
-            <!-- <div class="bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-t-lg">Oct</div> -->
-             <div class="text-white text-xs font-semibold px-4 py-2 rounded-t-lg" style="background-color: #003866;"> Oct</div>
-
-            <div class="bg-white px-4 py-2 text-[#003866] font-bold text-lg rounded-b-lg shadow-md">22</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <!-- <p class="text-gray-500 text-sm mb-1">Jessica Alford</p> -->
-           <p class="text-[#717488]  font-inter font-normal text-[20px] leading-[12px] tracking-[0.1em]">Jessica Alford</p>
-           
-          <div class="pt-6 pb-6 sm:text-left">
-          <h3 class="text-base sm:text-lg md:text-xl font-bold leading-snug text-[#012F55] font-bold">
-              Web Design Agency Is So Famous, But Why?
-          </h3>
-          </div>
-          <div class="mt-8 flex justify-end lg:justify-end md:justify-end sm:justify-start">
-            <img class="w-6 h-6" src="images/Arrow.svg" alt="Arrow">
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-</div>
-
-<div class="bg-[#072A47] text-white font-[Lexend]">
-
-<footer class="px-6 md:px-16 py-12 bg-[#072A47]">
-  <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between gap-10 relative">
-
-    <!-- LEFT BOX -->
-    <div class="w-full max-w-full md:max-w-[461px] md:h-[324px] mt-10 md:mt-[72px] md:ml-[80px] flex flex-col gap-6 md:gap-[20px]">
-
-      <!-- Logo -->
-      <div class="flex items-center">
-        <img src="logo/lightlogo/weblogo.png" alt="Unbaiq Logo" />
-      </div>
-
-      <!-- Description -->
-      <p class="font-light text-base leading-6 text-white opacity-70 max-w-full md:max-w-[461px]">
-        We design world-class digital products to help startups and Fortune 500 companies delight humans on the other side of the screen.
-      </p>
-
-      <!-- Newsletter -->
-      <div>
-        <h3 class="text-white text-base mb-2">Subscribe To Our Newsletter</h3>
-        <div class="border border-[#B6BDC3] opacity-100 rounded-lg font-[Lexend]">
-          <form class="flex flex-col sm:flex-row items-center gap-16 p-2">
-            <input
-              type="email"
-              placeholder="Your email address"
-              class="p-3 rounded-md text-black w-full sm:w-[250px] focus:outline-none bg-transparent"
-            />
-            <button
-              type="submit"
-              class="bg-gray-400 hover:bg-[#0f2a43] text-[#12334E] text-[14px] px-6 py-3 rounded-lg transition duration-200 w-full sm:w-auto font-[Lexend]"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <!-- Footer bottom -->
-     <div class="pt-6 w-[361px] h-[20px] flex flex-col md:flex-row justify-center md:justify-between items-center gap-2 md:gap-[15px] text-base font-light mx-auto md:mx-0 font-[Lexend]">
-  <span class="whitespace-nowrap">Privacy Policy</span>
-  <span class="whitespace-nowrap hidden md:inline">|</span>
-  <span class="whitespace-nowrap">© 2025 Unbaiq All Rights Reserved</span>
-</div>
-    </div>
-
-    <!-- RIGHT BOX -->
-    <div
-      class="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-6
-             md:absolute md:top-[81px] md:left-[690px]
-             md:w-[570px] md:h-[248px] md:gap-[143px]
-             text-sm"
-      style="font-family: 'Lexend', sans-serif;">
-
-      <!-- Navigation -->
-      <div class="text-center md:text-left mt-10 md:mt-0">
-        <h3 class="font-bold mb-4">Navigation</h3>
-          <ul class="space-y-3 text-base font-light opacity-70  whitespace-nowrap">
-          <li><a href="index1.html" class="hover:underline">Home</a></li>
-          <li><a href="index2.html" class="hover:underline">What We Do</a></li>
-          <li><a href="index3.html" class="hover:underline">Our Approach</a></li>
-          <li><a href="index4.html" class="hover:underline">Our Services</a></li>
-          <li><a href="#" class="hover:underline">Success Stories</a></li>
-          <li><a href="index5.html" class="hover:underline">About</a></li>
-          <li><a href="index6.html" class="hover:underline">Contact Us</a></li>
-        </ul>
-      </div>
-
-      <!-- Locations -->
-      <div class="text-center md:text-left mt-10 md:mt-0">
-       <h3 class="font-bold mb-4 md:whitespace-nowrap md:shrink-0 md:w-max">Office Locations</h3>
-        <ul class="space-y-2 text-base font-light">
-          <li><a>India</a></li>
-          <li><a href="index6.html" class="hover:underline opacity-70">Address</a></li>
-          <li><a ">Dubai</a></li>
-          <li><a href="index6.html" class="hover:underline opacity-70">Address</a></li>
-        </ul>
-      </div>
-
-     <!-- Social Media -->
-      <div class="text-center md:text-left mt-10 md:mt-0">
-        <h3 class="font-bold mb-4">Social Media</h3>
-        <ul class="space-y-2 text-base font-light opacity-70">
-          <li><a href="#" class="hover:underline">LinkedIn</a></li>
-          <li><a href="#" class="hover:underline">Twitter</a></li>
-          <li><a href="#" class="hover:underline">Instagram</a></li>
-          <li><a href="#" class="hover:underline">Facebook</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</footer>
-</div>
-
-</body>
+  </body>
 </html>
